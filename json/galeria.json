@@ -1,0 +1,6 @@
+[
+    { "src": "/images/image3.jpg", "titulo": "Imagem 3", "alt": "Descrição da Imagem 3" },
+    { "src": "/images/image4.png", "titulo": "Imagem 4", "alt": "Descrição da Imagem 4" },
+    { "src": "/images/image5.png", "titulo": "Imagem 5", "alt": "Descrição da Imagem 5" },
+    { "src": "/images/image6.png", "titulo": "Imagem 6", "alt": "Descrição da Imagem 6" }
+]

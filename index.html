@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2BeBot - Inicio</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+        <div class="container">
+            <a class="navbar-brand" href="#">2BeBot</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="./index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./views/productos.html">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./views/presupuesto.html">Presupuesto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./views/galeria.html">Galería</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./views/contacto.html">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-primary text-white text-center py-5">
+        <div class="container">
+            <h1 class="display-4">Bienvenido a 2BeBot</h1>
+            <p class="lead">Soluciones inteligentes en chatbots para transformar tu comunicación digital.</p>
+        </div>
+    </header>
+
+    <!-- Noticias -->
+    <section id="noticias" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Últimas Noticias</h2>
+            <div id="noticias-container" class="row g-5">
+                <!-- Noticias se cargarán aquí mediante JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <section id="productos" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">Sobre nuestros productos</h2>
+            <div class="row text-center">
+                <!-- Plan Básico -->
+                <div class="col-md-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Plan Básico</h5>
+                            <img src="./images/shop.png" height="200" width="200" alt="Tienda">
+                            <p class="card-text">Ideal para pequeñas empresas que comienzan a usar chatbots.</p>
+                            <a href="./views/productos.html" class="btn btn-primary">Detalles</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Plan Profesional -->
+                <div class="col-md-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Plan Profesional</h5>
+                            <img src="./images/building.png" height="200" width="200"  alt="Edificio" style="padding-top: 15px; padding-bottom: 15px;">
+                            <p class="card-text">Perfecto para empresas en crecimiento que buscan eficiencia en la atención.</p>
+                            <a href="./views/productos.html" class="btn btn-primary">Detalles</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Plan Empresarial -->
+                <div class="col-md-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Plan Empresarial</h5>
+                            <img src="./images/briefcase.png" height="200" width="200" alt="Maletín">
+                            <p class="card-text">Para grandes empresas que necesitan soluciones avanzadas y soporte dedicado.</p>
+                            <a href="./views/productos.html" class="btn btn-primary">Detalles</a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto" class="py-5 bg-light">
+        <div class="container text-center">
+            <h2 class="mb-4">Contáctanos</h2>
+            <p class="mb-4">¿Quieres saber más sobre nuestras soluciones? ¡Estamos listos para ayudarte!</p>
+            <a href="../views/contacto.html" class="btn btn-primary btn-lg">Contáctanos</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4">
+        <p class="mb-0">© 2024 2BeBot - Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        // Función para cargar noticias desde el archivo JSON
+        async function cargarNoticias() {
+            const response = await fetch('./json/noticias.json');
+            const noticias = await response.json();
+
+            const container = document.getElementById('noticias-container');
+            container.innerHTML = ''; // Limpia el contenido inicial
+
+            noticias.forEach(noticia => {
+                const card = document.createElement('div');
+                card.className = 'col-md-6';
+                card.innerHTML = `
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">${noticia.titulo}</h5>
+                            <p class="card-text">${noticia.descripcion}</p>
+                            <small class="text-muted">Publicado el: ${new Date(noticia.data).toLocaleDateString('es')}</small>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Cargar las noticias al cargar la página
+        window.onload = cargarNoticias;
+    </script>
+
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

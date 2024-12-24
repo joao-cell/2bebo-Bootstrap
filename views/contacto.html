@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - 2BeBot</title>
+    <!-- Bootstrap CSS  -->
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="../node_modules/leaflet/dist/leaflet.css">
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">2BeBot</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="productos.html">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="presupuesto.html">Presupuesto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="galeria.html">Galería</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="contacto.html">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-primary text-white text-center py-5">
+        <h1 class="display-4">Contáctanos</h1>
+        <p class="lead">Encuentra nuestra ubicación y calcula la mejor ruta hasta nosotros.</p>
+    </header>
+
+    <!-- Datos de Contacto -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Datos de Contacto</h3>
+                    <p><strong>Teléfono:</strong> (55) 1234-5678</p>
+                    <p><strong>Correo Electrónico:</strong> contacto@2bebot.com</p>
+                    <p><strong>Dirección:</strong> Calle Santana, 77 - Sao Vicente, Brasil</p>
+                </div>
+                <div class="col-md-6">
+                    <h3>Mapa de Ubicación</h3>
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4">
+        <p class="mb-0">© 2024 2BeBot - Todos los derechos reservados</p>
+    </footer>
+
+    <!-- Bootstrap-->
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Leaflet JS -->
+    <script src="../node_modules/leaflet/dist/leaflet.js"></script>
+
+    <!-- Map Initialization Script -->
+    <script>
+        const empresaCoords = [-23.950859144877775, -46.40235560466212]; // Coordenadas de Ciudad de México (ubicación de la empresa)
+
+        // Crear el mapa y centrarlo en la ubicación de la empresa
+        const map = L.map('map').setView(empresaCoords, 13);
+
+        // Añadir el mapa de OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Añadir un marcador para la ubicación de la empresa
+        const marker = L.marker(empresaCoords).addTo(map)
+            .bindPopup("<strong>2BeBot</strong><br>Calle Santana, 77 - Sao Vicente, Brasil")
+            .openPopup();
+
+        // Función para calcular la ruta desde la ubicación del usuario
+        function calcularRuta() {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const userCoords = [position.coords.latitude, position.coords.longitude];
+
+                    // Añadir un marcador para la ubicación del usuario
+                    L.marker(userCoords).addTo(map)
+                        .bindPopup("<strong>Tu ubicación</strong>")
+                        .openPopup();
+
+                    // Dibujar una línea entre el usuario y la empresa
+                    const polyline = L.polyline([userCoords, empresaCoords], { color: 'blue' }).addTo(map);
+                    map.fitBounds(polyline.getBounds());
+                },
+                () => {
+                    alert("No pudimos acceder a tu ubicación. Por favor, activa la geolocalización.");
+                }
+            );
+        }
+
+        // Calcular la ruta automáticamente al cargar la página
+        window.onload = calcularRuta;
+    </script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería - 2BeBot</title>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Glide -->
+    <link rel="stylesheet" href="../node_modules/@glidejs/glide/dist/css/glide.core.min.css">
+    
+    <style>
+        /* Estilo para la galería de imágenes */
+        .glide__slide img {
+            width: 100%;         /* Las imágenes ocupan el 100% del ancho del slide */
+            height: 500px;       /* Define la altura fija que deseas para todas las imágenes */
+            object-fit: cover;   /* Asegura que la imagen llene el espacio sin distorsión */
+            object-position: center; /* Centra la imagen dentro del espacio */
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">2BeBot</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="productos.html">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="presupuesto.html">Presupuesto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="galeria.html">Galería</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contacto.html">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-primary text-white text-center py-5">
+        <div class="container">
+            <h1 class="display-4">Galería de Proyectos</h1>
+            <p class="lead">Mira algunas imágenes de nuestros proyectos y soluciones.</p>
+        </div>
+    </header>
+
+    <!-- Galería -->
+    <section id="galeria" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Nuestra Galería</h2>
+            <div class="glide">
+                <div class="glide__track" data-glide-el="track">
+                    <ul class="glide__slides" id="galeria-container" style="padding:10px;">
+                        <!-- As imagens serão adicionadas dinamicamente aqui -->
+                    </ul>
+                </div>
+                <!-- Botões de navegação -->
+                <div class="glide__arrows" data-glide-el="controls">
+                    <button class="glide__arrow glide__arrow--left btn btn-outline-primary" data-glide-dir="<">«</button>
+                    <button class="glide__arrow glide__arrow--right btn btn-outline-primary" data-glide-dir=">">»</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4">
+        <p class="mb-0">© 2024 2BeBot - Todos los derechos reservados</p>
+    </footer>
+    <script>
+        // Función para cargar imágenes de la galería
+            async function cargarGaleria() {
+                try {
+                    const response = await fetch('../json/galeria.json');
+                    if (!response.ok) throw new Error(`Error: ${response.status}`);
+                    
+                    const imagenes = await response.json();
+                    const container = document.getElementById('galeria-container');
+                    container.innerHTML = ''; // Limpar o conteúdo inicial
+
+                    imagenes.forEach(imagen => {
+                        const li = document.createElement('li');
+                        li.className = 'glide__slide';
+                        li.innerHTML = `
+                            <img src="${imagen.src}" alt="${imagen.alt}" class="img-fluid rounded shadow">
+                        `;
+                        container.appendChild(li);
+                    });
+
+                    // Inicializar o Glide.js após carregar as imagens
+                    new Glide('.glide', {
+                        type: 'carousel',
+                        startAt: 0,
+                        perView: 3,
+                        gap: 20,
+                        breakpoints: {
+                            768: { perView: 1 }, // 1 slide por vez em telas menores
+                            1024: { perView: 2 } // 2 slides por vez em tablets
+                        }
+                    }).mount();
+                } catch (error) {
+                    console.error("Error al cargar la galería:", error);
+                }
+            }
+
+    // Cargar la galería al cargar la página
+    window.onload = cargarGaleria;
+</script>
+
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../node_modules/@glidejs/glide/dist/glide.min.js"></script>
+</body>
+</html>

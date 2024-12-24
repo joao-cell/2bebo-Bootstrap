@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presupuesto - 2BeBot</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        .error {
+            color: red;
+            font-size: 0.9rem;
+        }
+        .btn-center {
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+        
+    }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">2BeBot</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="productos.html">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="presupuesto.html">Presupuesto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="galeria.html">Galería</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contacto.html">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-primary text-white text-center py-5">
+        <h1 class="display-4">Solicita tu Presupuesto</h1>
+        <p class="lead">Calcula tu presupuesto personalizado en pocos pasos.</p>
+    </header>
+
+    <!-- Formulario de Presupuesto -->
+    <section class="py-5">
+        <div class="container">
+            <form id="presupuesto-form">
+                <!-- Datos de Contacto -->
+                <fieldset class="mb-4">
+                    <legend>Datos de Contacto</legend>
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" id="nombre" class="form-control" maxlength="15" required>
+                        <small class="error" id="error-nombre"></small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="apellidos" class="form-label">Apellidos</label>
+                        <input type="text" id="apellidos" class="form-control" maxlength="40" required>
+                        <small class="error" id="error-apellidos"></small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="telefono" class="form-label">Teléfono de Contacto</label>
+                        <input type="text" id="telefono" class="form-control" maxlength="9" required>
+                        <small class="error" id="error-telefono"></small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Correo Electrónico</label>
+                        <input type="email" id="email" class="form-control" required>
+                        <small class="error" id="error-email"></small>
+                    </div>
+                    <div class="btn-center mb-4">
+                        <button type="submit" class="btn btn-outline-primary btn-md" onclick="validarContacto()">Enviar</button>
+                    </div>
+                </fieldset>
+            </form>
+        </section>
+    <section class="py-5 bg-light">
+        <div class="container">
+            <form>
+                <!-- Opciones de Presupuesto -->
+                <fieldset>
+                    <legend>Opciones de Presupuesto</legend>
+                    <!-- Sección de Producto -->
+                    <div class="mb-4">
+                        <label for="producto" class="form-label">Selecciona un Producto:</label>
+                        <select id="producto" class="form-select">
+                            <option value="199">Chatbot Básico (€199)</option>
+                            <option value="499">Chatbot Avanzado (€499)</option>
+                            <option value="1099">Chatbot Empresarial (€1.099)</option>
+                        </select>
+                    </div>
+
+                    <!-- Sección de Plazo -->
+                    <div class="mb-4">
+                        <label for="plazo" class="form-label">Plazo de Entrega (en meses):</label>
+                        <input type="number" id="plazo" class="form-control" min="1" value="1">
+                        <small class="text-muted">Por cada 6 meses, se aplica un 5% de descuento al precio total.</small>
+                    </div>
+
+                    <!-- Sección de Extras -->
+                    <div class="mb-4">
+                        <label class="form-label">Extras:</label>
+                        <div class="form-check">
+                            <input type="checkbox" id="extra1" class="form-check-input" value="200">
+                            <label for="extra1" class="form-check-label">Soporte Técnico (€200)</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="extra2" class="form-check-input" value="300">
+                            <label for="extra2" class="form-check-label">Integración API (€300)</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="extra3" class="form-check-input" value="400">
+                            <label for="extra3" class="form-check-label">Diseño Personalizado (€400)</label>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Presupuesto Final -->
+                <div class="mb-4">
+                    <h3 class="form-label">Presupuesto Final:</h3>
+                    <p id="presupuesto-final" class="presupuesto-final">€0.00</p>
+                </div>
+            </form>
+        </div>
+    </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4">
+        <p class="mb-0">© 2024 2BeBot - Todos los derechos reservados</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Validaciones y Cálculo de Presupuesto -->
+    <script>
+        function validarContacto() {
+            const nombre = document.getElementById("nombre").value.trim();
+            const apellidos = document.getElementById("apellidos").value.trim();
+            const telefono = document.getElementById("telefono").value.trim();
+            const email = document.getElementById("email").value.trim();
+
+            let valido = true;
+
+            // Validar nombre
+            if (!/^[a-zA-Z\s]{1,15}$/.test(nombre)) {
+                document.getElementById("error-nombre").innerText = "El nombre debe tener solo letras y hasta 15 caracteres.";
+                valido = false;
+            } else {
+                document.getElementById("error-nombre").innerText = "";
+            }
+
+            // Validar apellidos
+            if (!/^[a-zA-Z\s]{1,40}$/.test(apellidos)) {
+                document.getElementById("error-apellidos").innerText = "Los apellidos deben tener solo letras y hasta 40 caracteres.";
+                valido = false;
+            } else {
+                document.getElementById("error-apellidos").innerText = "";
+            }
+
+            // Validar teléfono
+            if (!/^\d{9}$/.test(telefono)) {
+                document.getElementById("error-telefono").innerText = "El teléfono debe tener exactamente 9 dígitos.";
+                valido = false;
+            } else {
+                document.getElementById("error-telefono").innerText = "";
+            }
+
+            // Validar correo
+            if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+                document.getElementById("error-email").innerText = "Introduce un correo válido.";
+                valido = false;
+            } else {
+                document.getElementById("error-email").innerText = "";
+            }
+
+            if (valido) {
+                alert("¡Formulario válido! Todos los datos son correctos.");
+            }else{
+                alert("¡El formulario no es válido!.");
+            }
+            
+            return valido;
+            
+        }
+
+        const productoSelect = document.getElementById("producto");
+        const plazoInput = document.getElementById("plazo");
+        const extrasCheckboxes = document.querySelectorAll(".form-check-input");
+        const presupuestoFinal = document.getElementById("presupuesto-final");
+
+        function calcularPresupuesto() {
+            const productoPrecio = parseFloat(productoSelect.value);
+            const plazo = parseInt(plazoInput.value);
+            let extrasPrecio = 0;
+
+            extrasCheckboxes.forEach((checkbox) => {
+                if (checkbox.checked) {
+                    extrasPrecio += parseFloat(checkbox.value);
+                }
+            });
+
+            // Descuento de 5% por cada 6 meses
+            const numDescontos = Math.floor(plazo / 6);
+            const desconto = numDescontos * 0.05;
+            const descontoFinal = Math.min(desconto, 0.5); // Limitar desconto a 50%
+
+            const total = (productoPrecio + extrasPrecio) * (1 - descontoFinal);
+            presupuestoFinal.textContent = `€${total.toFixed(2)}`;
+        }
+
+        productoSelect.addEventListener("change", calcularPresupuesto);
+        plazoInput.addEventListener("input", calcularPresupuesto);
+        extrasCheckboxes.forEach((checkbox) =>
+            checkbox.addEventListener("change", calcularPresupuesto)
+        );
+
+        calcularPresupuesto(); // Calcular inicialmente
+    </script>
+</body>
+</html>
